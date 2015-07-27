@@ -1,23 +1,12 @@
 package cn.itjesse.subwaydic;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity
@@ -56,20 +45,17 @@ public class MainActivity extends ActionBarActivity
             case 0:
                 mTitle = getString(R.string.title_search);
                 fragmentManager.beginTransaction()
-                .replace(R.id.container, SearchFragment.newInstance())
-                .commit();
+                    .replace(R.id.container, SearchFragment.newInstance())
+                    .commit();
                 break;
             case 1:
-                mTitle = getString(R.string.title_edit);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, EditFragment.newInstance())
-                        .commit();
-                break;
-            case 2:
                 mTitle = getString(R.string.title_import);
                 break;
-            case 3:
+            case 2:
                 mTitle = getString(R.string.title_export);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_settings);
                 break;
         }
 //        FragmentManager fragmentManager = getSupportFragmentManager();
