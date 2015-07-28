@@ -12,7 +12,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        new Handler().postDelayed(r, 1000);
+        new Handler().postDelayed(r, 2000);
     }
 
     Runnable r = new Runnable() {
