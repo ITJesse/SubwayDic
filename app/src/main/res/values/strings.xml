@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">地铁词典</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_welcome">地铁词典</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_add">添加</string>
-    <string name="title_activity_search">SearchActivity</string>
     <string name="search_text">检索...</string>
     <string name="title_activity_main">MainActivity</string>
 
