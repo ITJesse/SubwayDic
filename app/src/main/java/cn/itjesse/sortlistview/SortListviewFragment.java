@@ -1,11 +1,14 @@
 package  cn.itjesse.sortlistview;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -20,12 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SortListviewActivity extends Activity {
+public class SortListviewFragment extends Fragment {
     private ListView sortListView;
     private SideBar sideBar;
     private TextView dialog;
     private SortAdapter adapter;
-    private EditText mClearEditText;
+    private ClearEditText mClearEditText;
 
     /**
      * 汉字转换成拼音的类
@@ -33,26 +36,36 @@ public class SortListviewActivity extends Activity {
     private CharacterParser characterParser;
     private List<SortModel> SourceDateList;
 
+    public static SortListviewFragment newInstance() {
+        SortListviewFragment fragment = new SortListviewFragment();
+        return fragment;
+    }
+
+    public SortListviewFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * 根据拼音来排列ListView里面的数据类
      */
     private PinyinComparator pinyinComparator;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sortlistview);
-        initViews();
     }
 
-    private void initViews() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_sortlistview, container, false);
         //实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
 
         pinyinComparator = new PinyinComparator();
 
-        sideBar = (SideBar) findViewById(R.id.sidrbar);
-        dialog = (TextView) findViewById(R.id.dialog);
+        sideBar = (SideBar) rootView.findViewById(R.id.sidrbar);
+        dialog = (TextView) rootView.findViewById(R.id.dialog);
         sideBar.setTextView(dialog);
 
         //设置右侧触摸监听
@@ -69,14 +82,14 @@ public class SortListviewActivity extends Activity {
             }
         });
 
-        sortListView = (ListView) findViewById(R.id.country_lvcountry);
+        sortListView = (ListView) rootView.findViewById(R.id.country_lvcountry);
         sortListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-                Toast.makeText(getApplication(), ((SortModel) adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getBaseContext(), ((SortModel) adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -84,11 +97,11 @@ public class SortListviewActivity extends Activity {
 
         // 根据a-z进行排序源数据
         Collections.sort(SourceDateList, pinyinComparator);
-        adapter = new SortAdapter(this, SourceDateList);
+        adapter = new SortAdapter(getActivity().getBaseContext(), SourceDateList);
         sortListView.setAdapter(adapter);
 
 
-        mClearEditText = (EditText) findViewById(R.id.searchText);
+        mClearEditText = (ClearEditText) rootView.findViewById(R.id.searchText);
 
         //根据输入框输入值的改变来过滤搜索
         mClearEditText.addTextChangedListener(new TextWatcher() {
@@ -109,8 +122,9 @@ public class SortListviewActivity extends Activity {
             public void afterTextChanged(Editable s) {
             }
         });
-    }
 
+        return rootView;
+    }
 
     /**
      * 为ListView填充数据

@@ -24,7 +24,7 @@
                 android:value="cn.itjesse.subwaydic.MainActivity" />
         </activity>
         <activity
-            android:name="cn.itjesse.sortlistview.SortListviewActivity"
+            android:name="cn.itjesse.sortlistview.SortListviewFragment"
             android:label="@string/title_activity_main" >
         </activity>
     </application>
