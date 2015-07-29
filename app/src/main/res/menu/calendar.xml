@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.itjesse.subwaydic.MainActivity">
+    <item
+        android:id="@+id/action_switch_group"
+        android:title="@string/action_switch_group"
+        app:showAsAction="withText|ifRoom" />
 </menu>

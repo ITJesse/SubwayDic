@@ -1,11 +1,11 @@
-package  cn.itjesse.sortlistview;
+package cn.itjesse.subwaydic;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,20 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 
+import cn.itjesse.sortlistview.CharacterParser;
+import cn.itjesse.sortlistview.ClearEditText;
+import cn.itjesse.sortlistview.PinyinComparator;
+import cn.itjesse.sortlistview.SideBar;
 import  cn.itjesse.sortlistview.SideBar.OnTouchingLetterChangedListener;
-import cn.itjesse.subwaydic.R;
+import cn.itjesse.sortlistview.SortAdapter;
+import cn.itjesse.sortlistview.SortModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class SortListviewFragment extends Fragment {
     private ListView sortListView;
@@ -203,10 +206,12 @@ public class SortListviewFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
+        Log.d("DEBUG========", "onResume");
         MobclickAgent.onPageStart("MainScreen"); //统计页面
     }
     public void onPause() {
         super.onPause();
+        Log.d("DEBUG========", "onPause");
         MobclickAgent.onPageEnd("MainScreen");
     }
 

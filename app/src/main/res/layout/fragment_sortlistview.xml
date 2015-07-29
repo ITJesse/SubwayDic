@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.itjesse.sortlistview.SortListviewFragment">
+    tools:context="cn.itjesse.subwaydic.SortListviewFragment">
 
     <cn.itjesse.sortlistview.ClearEditText
         android:id="@+id/searchText"

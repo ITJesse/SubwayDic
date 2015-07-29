@@ -12,8 +12,6 @@ import android.view.MenuItem;
 
 import com.umeng.analytics.MobclickAgent;
 
-import cn.itjesse.sortlistview.SortListviewFragment;
-
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -45,13 +43,13 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        sortListFragment = SortListviewFragment.newInstance();
-        calendarFragment = CalendarFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, sortListFragment)
-                .commit();
-        currentFragment = sortListFragment;
+//        sortListFragment = SortListviewFragment.newInstance();
+//        calendarFragment = CalendarFragment.newInstance();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.container, sortListFragment)
+//                .commit();
+//        currentFragment = sortListFragment;
     }
 
     @Override
@@ -61,11 +59,17 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 mTitle = getString(R.string.title_search);
-                switchContent(currentFragment, sortListFragment);
+//                switchContent(currentFragment, sortListFragment);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, SortListviewFragment.newInstance())
+                        .commit();
                 break;
             case 1:
                 mTitle = getString(R.string.title_calendar);
-                switchContent(currentFragment, calendarFragment);
+//                switchContent(currentFragment, calendarFragment);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, CalendarFragment.newInstance())
+                        .commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_import);
@@ -77,10 +81,6 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.title_settings);
                 break;
         }
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-//                .commit();
     }
 
     public void switchContent(Fragment from, Fragment to) {
@@ -95,6 +95,7 @@ public class MainActivity extends ActionBarActivity
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
+        fragmentManager.beginTransaction().replace(R.id.container, to).commit();
     }
 
     public void restoreActionBar() {
