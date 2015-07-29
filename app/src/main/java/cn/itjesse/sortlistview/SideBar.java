@@ -1,4 +1,4 @@
-package  cn.itjesse.sortlistview;
+package cn.itjesse.sortlistview;
 
 import android.content.Context;
 import android.graphics.Canvas;

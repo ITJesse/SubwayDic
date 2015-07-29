@@ -47,4 +47,17 @@
         <item>~夏先生</item>
     </string-array>
 
+    <string-array name="group">
+        <item>一组</item>
+        <item>二组</item>
+        <item>三组</item>
+        <item>四组</item>
+    </string-array>
+
+    <string-array name="year">
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+    </string-array>
+
 </resources>

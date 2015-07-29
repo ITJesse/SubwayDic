@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
-    private Context mContext;
-    public static final String CREATE_BOOK="CREATE TABLE IF NOT EXISTS dictionary (" +
+    public static final String CREATE_BOOK = "CREATE TABLE IF NOT EXISTS dictionary (" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             " `key` VARCHAR," +
             " `value` VARCHAR)";
+    private Context mContext;
 
     //四个参数的构造函数
-    public MyDatabaseHelper(Context context, String name,SQLiteDatabase.CursorFactory factory, int version) {
+    public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-        mContext=context;
+        mContext = context;
     }
 
     //回调函数，第一次创建数据库时才会调用此函数

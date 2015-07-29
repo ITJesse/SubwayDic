@@ -7,6 +7,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,12 +19,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import  cn.itjesse.sortlistview.SideBar.OnTouchingLetterChangedListener;
 import cn.itjesse.subwaydic.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class SortListviewFragment extends Fragment {
     private ListView sortListView;
@@ -32,17 +38,18 @@ public class SortListviewFragment extends Fragment {
 
     /**
      * 汉字转换成拼音的类
-     */
+     * }
+
+    public SortListviewFragment() {
+        // Required empty public constructor
+        SortListviewFragment fragment = new SortListviewFragment();
+        return fragment;
+
+/
     private CharacterParser characterParser;
     private List<SortModel> SourceDateList;
 
     public static SortListviewFragment newInstance() {
-        SortListviewFragment fragment = new SortListviewFragment();
-        return fragment;
-    }
-
-    public SortListviewFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -53,6 +60,7 @@ public class SortListviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -178,6 +186,29 @@ public class SortListviewFragment extends Fragment {
         // 根据a-z进行排序
         Collections.sort(filterDateList, pinyinComparator);
         adapter.updateListView(filterDateList);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.sort_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        Toast.makeText(getActivity(), "menu text is " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); //统计页面
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
     }
 
 }

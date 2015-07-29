@@ -1,12 +1,16 @@
 package cn.itjesse.subwaydic;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.umeng.analytics.MobclickAgent;
 
 import cn.itjesse.sortlistview.SortListviewFragment;
 
@@ -24,6 +28,9 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    private Fragment currentFragment;
+    private Fragment sortListFragment, calendarFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +44,36 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        sortListFragment = SortListviewFragment.newInstance();
+        calendarFragment = CalendarFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, sortListFragment)
+                .commit();
+        currentFragment = sortListFragment;
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
+        // update the sort_list content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch(position){
+        switch (position) {
             case 0:
                 mTitle = getString(R.string.title_search);
-                fragmentManager.beginTransaction()
-                    .replace(R.id.container, SortListviewFragment.newInstance())
-                    .commit();
+                switchContent(currentFragment, sortListFragment);
                 break;
             case 1:
-                mTitle = getString(R.string.title_import);
+                mTitle = getString(R.string.title_calendar);
+                switchContent(currentFragment, calendarFragment);
                 break;
             case 2:
-                mTitle = getString(R.string.title_export);
+                mTitle = getString(R.string.title_import);
                 break;
             case 3:
+                mTitle = getString(R.string.title_export);
+                break;
+            case 4:
                 mTitle = getString(R.string.title_settings);
                 break;
         }
@@ -64,6 +81,20 @@ public class MainActivity extends ActionBarActivity
 //        fragmentManager.beginTransaction()
 //                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
 //                .commit();
+    }
+
+    public void switchContent(Fragment from, Fragment to) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (currentFragment != to) {
+            currentFragment = to;
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
     }
 
     public void restoreActionBar() {
@@ -101,6 +132,16 @@ public class MainActivity extends ActionBarActivity
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

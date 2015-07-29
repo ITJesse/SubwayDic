@@ -1,4 +1,4 @@
-package  cn.itjesse.sortlistview;
+package cn.itjesse.sortlistview;
 
 public class SortModel {
 
