@@ -38,18 +38,17 @@ public class SortListviewFragment extends Fragment {
 
     /**
      * 汉字转换成拼音的类
-     * }
-
-    public SortListviewFragment() {
-        // Required empty public constructor
-        SortListviewFragment fragment = new SortListviewFragment();
-        return fragment;
-
-/
+     */
     private CharacterParser characterParser;
     private List<SortModel> SourceDateList;
 
     public static SortListviewFragment newInstance() {
+        SortListviewFragment fragment = new SortListviewFragment();
+        return fragment;
+    }
+
+    public SortListviewFragment() {
+        // Required empty public constructor
     }
 
     /**
