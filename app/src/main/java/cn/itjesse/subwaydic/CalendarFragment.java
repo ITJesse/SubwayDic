@@ -1,6 +1,7 @@
 package cn.itjesse.subwaydic;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
@@ -77,8 +80,13 @@ public class CalendarFragment extends Fragment implements OnDateChangedListener,
 //        } catch (ParseException e) {
 //            e.printStackTrace();
 //        }
+        calendarView.setTileSize(100);
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
+        calendarView.addDecorator(new DutyDecorator(1));
+        calendarView.addDecorator(new DutyDecorator(2));
+        calendarView.addDecorator(new DutyDecorator(3));
+        calendarView.addDecorator(new DutyDecorator(4));
         return rootView;
     }
 
@@ -95,6 +103,60 @@ public class CalendarFragment extends Fragment implements OnDateChangedListener,
     @Override
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
         Toast.makeText(getActivity().getBaseContext(), FORMATTER.format(date.getDate()), Toast.LENGTH_SHORT).show();
+    }
+
+    private class DutyDecorator implements DayViewDecorator {
+
+        private int dutyType;
+        private Drawable drawable;
+
+        public DutyDecorator(int index) {
+            dutyType = index;
+        }
+
+        /**
+         * 需要实现效果的天数返回true
+         * @param day {@linkplain CalendarDay} to possibly decorate
+         *
+         * @return
+         */
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            int index = 4 - (day.getDay() % 4);
+            if(index == dutyType){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * 上面方法返回true的天，会设置无法选择
+         * @param view View to decorate
+         */
+        @Override
+        public void decorate(DayViewFacade view) {
+//            view.setDaysDisabled(true);
+            switch(dutyType){
+                case 1:
+                    drawable = getActivity().getResources().getDrawable(R.drawable.duty_morning);
+                    break;
+                case 2:
+                    drawable = getActivity().getResources().getDrawable(R.drawable.duty_afternoon);
+                    break;
+                case 3:
+                    drawable = getActivity().getResources().getDrawable(R.drawable.duty_night);
+                    break;
+                case 4:
+                    drawable = getActivity().getResources().getDrawable(R.drawable.duty_rest);
+                    break;
+                default:
+                    drawable = null;
+            }
+            if(null != drawable)
+                view.setBackgroundDrawable(drawable);
+        }
+
     }
 
     private void changeGroup() {
