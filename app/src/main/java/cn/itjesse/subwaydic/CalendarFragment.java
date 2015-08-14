@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -23,13 +20,10 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
-import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -207,20 +201,6 @@ public class CalendarFragment extends Fragment implements OnDateChangedListener,
     private void resetSubtitle() {
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         actionBar.setSubtitle(null);
-    }
-
-    public void onResume() {
-        super.onResume();
-        Log.d("DEBUG========", "onResume");
-        changeSubtitle();
-        MobclickAgent.onPageStart("MainScreen"); //统计页面
-    }
-
-    public void onPause() {
-        super.onPause();
-        Log.d("DEBUG========", "onPause");
-        resetSubtitle();
-        MobclickAgent.onPageEnd("MainScreen");
     }
 
 }

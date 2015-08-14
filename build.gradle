@@ -20,5 +20,4 @@ allprojects {
 
 repositories {
     jcenter()
-    maven { url "https://raw.githubusercontent.com/umeng/mvn-repo-umeng/master/repository" }
 }

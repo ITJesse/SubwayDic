@@ -23,4 +23,7 @@
     <string name="group_2">二组班次</string>
     <string name="group_3">三组班次</string>
     <string name="group_4">四组班次</string>
+    <string name="add_title_text">请输入标题</string>
+    <string name="add_content_text">请输入内容</string>
+    <string name="add_button_text">添加</string>
 </resources>

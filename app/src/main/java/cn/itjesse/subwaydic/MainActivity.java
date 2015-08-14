@@ -10,8 +10,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.umeng.analytics.MobclickAgent;
-
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -133,16 +131,6 @@ public class MainActivity extends ActionBarActivity
 //        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);       //统计时长
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
 }

@@ -2,10 +2,10 @@ package cn.itjesse.subwaydic;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,19 +18,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import cn.itjesse.sortlistview.CharacterParser;
 import cn.itjesse.sortlistview.ClearEditText;
 import cn.itjesse.sortlistview.PinyinComparator;
 import cn.itjesse.sortlistview.SideBar;
-import  cn.itjesse.sortlistview.SideBar.OnTouchingLetterChangedListener;
+import cn.itjesse.sortlistview.SideBar.OnTouchingLetterChangedListener;
 import cn.itjesse.sortlistview.SortAdapter;
 import cn.itjesse.sortlistview.SortModel;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SortListviewFragment extends Fragment {
     private ListView sortListView;
@@ -38,6 +36,8 @@ public class SortListviewFragment extends Fragment {
     private TextView dialog;
     private SortAdapter adapter;
     private ClearEditText mClearEditText;
+
+    private Fragment addFragment;
 
     /**
      * 汉字转换成拼音的类
@@ -63,6 +63,7 @@ public class SortListviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        addFragment = AddFragment.newInstance();
     }
 
     @Override
@@ -199,20 +200,18 @@ public class SortListviewFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        Toast.makeText(getActivity(), "menu text is " + item.getTitle(), Toast.LENGTH_SHORT).show();
-        return super.onOptionsItemSelected(item);
-    }
+        if (item.getItemId() == R.id.action_add) {
+            Toast.makeText(getActivity(), "menu text is " + item.getTitle(), Toast.LENGTH_SHORT).show();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//            if(addFragment.isAdded()){
+//                fragmentManager.beginTransaction().show(addFragment).commit();
+//            }else{
+//                fragmentManager.beginTransaction().add(R.id.container, addFragment).commit();
+//            }
+            fragmentManager.beginTransaction().replace(R.id.container, addFragment).commit();
+        }
 
-    public void onResume() {
-        super.onResume();
-        Log.d("DEBUG========", "onResume");
-        MobclickAgent.onPageStart("MainScreen"); //统计页面
-    }
-    public void onPause() {
-        super.onPause();
-        Log.d("DEBUG========", "onPause");
-        MobclickAgent.onPageEnd("MainScreen");
+        return super.onOptionsItemSelected(item);
     }
 
 }
